@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kamva 💘</title>
+
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: radial-gradient(circle at top, #ffd6e8, #ff8fab);
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* floating hearts */
+    .heart {
+      position: absolute;
+      font-size: 20px;
+      animation: floatUp 6s linear infinite;
+      opacity: 0.6;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(100vh) scale(0.8);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(-10vh) scale(1.2);
+        opacity: 1;
+      }
+    }
+
+    .card {
+      background: white;
+      padding: 30px 25px 35px;
+      border-radius: 22px;
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+      width: 90%;
+      max-width: 420px;
+      position: relative;
+      z-index: 10;
+    }
+
+    h1 {
+      color: #ff2f6e;
+      margin-bottom: 25px;
+      font-size: 26px;
+    }
+
+    .buttons {
+      position: relative;
+      height: 140px;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 14px 28px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: absolute;
+      white-space: nowrap;
+    }
+
+    #yesBtn {
+      background-color: #ff2f6e;
+      color: white;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+    }
+
+    #noBtn {
+      background-color: #f1f1f1;
+      color: #333;
+      left: 50%;
+      top: 70px;
+      transform: translateX(-50%);
+    }
+
+    .success {
+      display: none;
+    }
+
+    .success img {
+      width: 100%;
+      max-width: 280px;
+      border-radius: 18px;
+      margin-top: 15px;
+    }
+
+    .success h2 {
+      color: #ff2f6e;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- floating hearts -->
+  <script>
+    for (let i = 0; i < 25; i++) {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerText = Math.random() > 0.5 ? "💖" : "💘";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDelay = Math.random() * 6 + "s";
+      heart.style.fontSize = 14 + Math.random() * 18 + "px";
+      document.body.appendChild(heart);
+    }
+  </script>
+
+  <div class="card">
+    <h1 id="question">Kamva, will you be my Valentine? 💘</h1>
+
+    <div class="buttons" id="buttons">
+      <button id="yesBtn">Yes 😌💖</button>
+      <button id="noBtn">No 🙃</button>
+    </div>
+
+    <div class="success" id="success">
+      <h2>Good choice, Kamva 😏💘</h2>
+      <p>I knew you’d come around.</p>
+      <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2M2ZGN4NWYyM3R5OXpxN3ZicGZzNHFhMW83cm9nOWJ6NGkzZmpsaCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/l0MYt5jPR6QX5pnqM/giphy.gif" alt="celebration gif">
+    </div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const question = document.getElementById("question");
+    const buttons = document.getElementById("buttons");
+    const success = document.getElementById("success");
+
+    let noClicks = 0;
+
+    const phrases = [
+      "Are you sure?",
+      "Ekse.. 😐",
+      "You’re killing me here, Kamva...",
+      "Did you at least consider it first?",
+      "This is getting awkward now 😭",
+      "Kamva please 😭😭"
+    ];
+
+    noBtn.addEventListener("click", () => {
+      noClicks++;
+
+      question.textContent =
+        phrases[Math.min(noClicks - 1, phrases.length - 1)];
+
+      // Move No button
+      const x = Math.random() * 260 - 130;
+      const y = Math.random() * 90;
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
+
+      // Grow Yes button aggressively
+      const scale = 1 + noClicks * 0.3;
+      yesBtn.style.transform = `translateX(-50%) scale(${scale})`;
+    });
+
+    yesBtn.addEventListener("click", () => {
+      buttons.style.display = "none";
+      question.style.display = "none";
+      success.style.display = "block";
+    });
+  </script>
+
+</body>
+</html>
